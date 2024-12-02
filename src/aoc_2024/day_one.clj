@@ -23,6 +23,5 @@
         cleaned (clean-pairs pairs)
         left-list (make-list (rest cleaned)) ;; odd indices
         right-list (make-list cleaned)]
-    {:part-one
-     (reduce + (mapv #(abs (- %1 %2)) left-list right-list))
+    {:part-one (reduce + (mapv #(abs (- %1 %2)) left-list right-list))
      :part-two (produce-second-part-answer left-list right-list)}))
