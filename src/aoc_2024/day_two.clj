@@ -13,7 +13,11 @@
   (let [diff (abs (- b a))]
     (<= 1 diff 3)))
 
-(defn valid-sequence? [nums]
+(defn valid-sequence?
+  "base sequence validator:
+   - (dec|inc)reasing sequence
+   - step between 1 and 3"
+  [nums]
   (and (seq nums) ; ensure non-empty
        (every? valid-diff? (partition 2 1 nums))
        (inc-or-dec? nums)))
@@ -24,9 +28,26 @@
    (mapv #(str/split % #"\s+"))
    (mapv #(mapv parse-long %))))
 
+(defn count-valid-seqs [validator seqs]
+  (count (filterv validator seqs)))
+
 (defn solution-part-one [input]
-  (count
-   (filterv true?
-            (mapv #(valid-sequence? %) input))))
+  (count-valid-seqs valid-sequence? seqs)
 
 (solution-part-one seqs)
+
+;; part two
+
+(defn problem-dampener
+  "Curried fn that creates a dampened validator"
+  [validator]
+  (fn [coll]
+    (or (validator coll)
+        (some validator (mapv #(concat (take % coll)
+                                       (drop (inc %) coll))
+                              (range (count coll)))))))
+
+(defn solution-part-two [input]
+  (count-valid-seqs (problem-dampener valid-sequence?) input))
+
+(solution-part-two seqs)
