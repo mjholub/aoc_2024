@@ -32,7 +32,7 @@
   (count (filterv validator seqs)))
 
 (defn solution-part-one [input]
-  (count-valid-seqs valid-sequence? seqs)
+  (count-valid-seqs valid-sequence? seqs))
 
 (solution-part-one seqs)
 
