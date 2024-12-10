@@ -39,7 +39,7 @@
 ;; part two
 
 (defn problem-dampener
-  "Curried fn that creates a dampened validator"
+  "Curried function that creates a dampened validator"
   [validator]
   (fn [coll]
     (or (validator coll)
